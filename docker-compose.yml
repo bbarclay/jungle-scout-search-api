@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  api:
+    build: .
+    ports:
+      - '3000:3000'
+    volumes:
+      - /var/www/node_modules
+      - .:/var/www
+    environment:
+      - NODE_ENV=development
+  # db:
+  #   image: mongo:latest
+  #   ports:
+  #     - 27017:27017
+  #   volumes:
+  #     - ./data/db:/data/db
+  #   environment:
+  #     - MONGO_DATA_DIR=/data/db
+  #     - MONGO_LOG_DIR=/dev/null
+  #     - MONGO_INITDB_DATABASE=selected
+  #   command: mongod --smallfiles --logpath=/dev/null # --quiet

@@ -1,0 +1,45 @@
+{
+  "name": "@jungle-scout/search-api",
+  "version": "1.0.0",
+  "description": "Jungle Scout Search API [UNOFFICIAL]",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aklkv/jungle-scout-search-api.git"
+  },
+  "license": "UNLICENSED",
+  "author": "Alexey Kulakov <uni_que@me.com>",
+  "main": "index.js",
+  "module": "app.js",
+  "scripts": {
+    "build": "gulp build",
+    "start": "pm2-runtime start ecosystem.config.js",
+    "start:production": "pm2-runtime start ecosystem.config.js --env production",
+    "test": "NODE_ENV=test mocha -r esm tests --recursive --exit"
+  },
+  "dependencies": {
+    "@pm2/io": "^2.4.7",
+    "body-parser": "^1.18.3",
+    "compression": "^1.7.3",
+    "cors": "^2.8.5",
+    "esm": "^3.0.84",
+    "express": "^4.16.4",
+    "express-autoroute": "^2.1.0",
+    "express-no-favicons": "0.0.1",
+    "express-winston": "^3.0.1",
+    "helmet": "^3.15.0",
+    "lodash": "^4.17.11",
+    "mongoose": "^5.4.0",
+    "nconf": "^0.10.0",
+    "winston": "^3.1.0",
+    "winston-loggly-bulk": "^2.0.3"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "^5.10.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "mocha": "^5.2.0",
+    "pm2": "^3.2.4",
+    "supertest": "^3.3.0"
+  }
+}
