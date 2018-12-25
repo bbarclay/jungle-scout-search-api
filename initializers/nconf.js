@@ -1,13 +1,16 @@
 import nconf from 'nconf';
-import path from 'path';
 
 export default () => {
   // error if environment is not set correctly
   if (!['production', 'development', 'test'].includes(process.env.NODE_ENV)) {
-    throw new Error('NODE_ENV must be production, staging or development');
+    throw new Error('NODE_ENV must be production, development or test');
   }
 
-  nconf.file('localOverrides', path.join(__dirname, '../config', `${process.env.NODE_ENV}.json`));
+  nconf.file('localOverrides', {
+    file: `${process.env.NODE_ENV}.json`,
+    dir: 'config',
+    search: true,
+  });
 
   if (nconf.get('nconf:file')) {
     nconf.file('local-file', nconf.get('nconf:file'));
@@ -25,14 +28,14 @@ export default () => {
       },
       winstonLoggly: {
         token: process.env.LOGGLY_TOKEN,
-        subdomain: 'selected',
+        subdomain: '',
         tags: [process.env.NODE_ENV],
         json: true,
         level: 'info',
       },
     },
     database: {
-      mongo: process.env.MONGO,
+      mongoUrl: process.env.MONGO_URL,
     },
   });
 };

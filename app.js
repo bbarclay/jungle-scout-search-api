@@ -1,17 +1,18 @@
 import express from 'express';
 import nconf from 'nconf';
-import winston from 'winston';
+import { decorateApp } from '@awaitjs/express';
+
+import log from './initializers/logger';
 import initializers from './initializers';
 
-const app = express();
+const app = decorateApp(express());
 
 initializers.nconf(); // Initializer nconf MUST be first
-// initializers.winston();
-// initializers.database(nconf);
+initializers.database(nconf);
 initializers.server(app);
 
 const server = app.listen(nconf.get('server:port'), () => {
-  winston.info(`environment ${nconf.get('environment')}`);
-  winston.info(`Server listening on ${server.address().port}`);
+  log.info(`environment ${nconf.get('environment')}`);
+  log.info(`Server listening on ${server.address().port}`);
   process.send('ready');
 });

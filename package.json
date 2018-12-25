@@ -2,6 +2,10 @@
   "name": "@jungle-scout/search-api",
   "version": "1.0.0",
   "description": "Jungle Scout Search API [UNOFFICIAL]",
+  "homepage": "https://github.com/aklkv/jungle-scout-search-api#readme",
+  "bugs": {
+    "url": "https://github.com/aklkv/jungle-scout-search-api/issues"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aklkv/jungle-scout-search-api.git"
@@ -10,6 +14,9 @@
   "author": "Alexey Kulakov <uni_que@me.com>",
   "main": "index.js",
   "module": "app.js",
+  "directories": {
+    "test": "tests"
+  },
   "scripts": {
     "build": "gulp build",
     "start": "pm2-runtime start ecosystem.config.js",
@@ -17,28 +24,45 @@
     "test": "NODE_ENV=test mocha -r esm tests --recursive --exit"
   },
   "dependencies": {
+    "@awaitjs/express": "^0.1.4",
     "@pm2/io": "^2.4.7",
+    "app-root-path": "^2.1.0",
     "body-parser": "^1.18.3",
+    "celebrate": "^9.0.1",
+    "cheerio": "^1.0.0-rc.2",
+    "common-errors": "^1.0.5",
     "compression": "^1.7.3",
     "cors": "^2.8.5",
     "esm": "^3.0.84",
     "express": "^4.16.4",
     "express-autoroute": "^2.1.0",
     "express-no-favicons": "0.0.1",
+    "express-rate-limit": "^3.3.2",
     "express-winston": "^3.0.1",
+    "foxr": "^0.8.1",
     "helmet": "^3.15.0",
+    "http-errors": "^1.7.1",
+    "joi": "^14.3.0",
     "lodash": "^4.17.11",
     "mongoose": "^5.4.0",
     "nconf": "^0.10.0",
+    "passport": "^0.4.0",
+    "passport-headerapikey": "^1.1.0",
+    "puppeteer": "^1.11.0",
+    "rate-limit-mongo": "^1.0.3",
+    "request-promise": "^4.2.2",
+    "uuid": "^3.3.2",
     "winston": "^3.1.0",
-    "winston-loggly-bulk": "^2.0.3"
+    "winston-loggly-bulk": "github:loggly/winston-loggly-bulk#3.x"
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "eslint": "^5.10.0",
+    "eslint": "^5.11.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
+    "faker": "^4.1.0",
     "mocha": "^5.2.0",
+    "nock": "^10.0.5",
     "pm2": "^3.2.4",
     "supertest": "^3.3.0"
   }

@@ -38,3 +38,5 @@ node_modules
 
 config/secure.json
 /coverage
+
+/data

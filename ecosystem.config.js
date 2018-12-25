@@ -3,10 +3,10 @@ module.exports = {
     name: 'api',
     script: 'app.js',
     node_args: '-r esm',
+    ignore_watch: ['.git', 'node_modules', 'data'],
     env: {
       NODE_ENV: 'development',
       watch: true,
-      ignore_watch: './data/**/**/',
     },
     env_production: {
       NODE_ENV: 'production',

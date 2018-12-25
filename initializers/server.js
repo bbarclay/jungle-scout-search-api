@@ -5,14 +5,12 @@ import cors from 'cors';
 import helmet from 'helmet';
 import nofavicon from 'express-no-favicons';
 import path from 'path';
-import winston from 'winston';
 
-import { expressWinstonLogger } from './winston';
+import log, { expressLogger } from './logger';
 import middlewares from '../middlewares';
 
-
 export default (app) => {
-  app.use(expressWinstonLogger);
+  app.use(expressLogger);
 
   app.use(nofavicon());
 
@@ -20,15 +18,16 @@ export default (app) => {
 
   app.use(cors());
 
-  app.use(bodyParser.json({ type: 'application/json' }));
-  app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
-
   app.use(compression());
+
+  app.use(bodyParser.json({ type: 'application/json' }));
+
+  app.use(middlewares.rateLimiter());
 
   // Loading all routes
   autoroute(app, {
     routesDir: path.join(__dirname, '../routes'),
-    logger: winston,
+    logger: log,
   });
 
   app.use(middlewares.errorHandler);
