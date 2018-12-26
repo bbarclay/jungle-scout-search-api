@@ -1,0 +1,6 @@
+[
+  {
+    "name": "search-api",
+    "imageUri": "589987406248.dkr.ecr.us-west-2.amazonaws.com/jungle-scout-search-api:latest"
+  }
+]
