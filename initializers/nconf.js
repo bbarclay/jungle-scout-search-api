@@ -13,14 +13,18 @@ export default () => {
   });
 
   if (nconf.get('nconf:file')) {
-    nconf.file('local-file', nconf.get('nconf:file'));
+    nconf.file('local-file', {
+      file: nconf.get('nconf:file'),
+      dir: 'config',
+      search: true,
+    });
   }
 
   // common options
   nconf.defaults({
     environment: process.env.NODE_ENV,
     server: {
-      port: 3000,
+      port: process.env.PORT || 3000,
     },
     logger: {
       winstonConsole: {

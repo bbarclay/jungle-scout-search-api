@@ -17,6 +17,6 @@ COPY . .
 RUN npm i --prod -q
 
 # Expose
-EXPOSE 3000
+EXPOSE 80
 
 CMD ["/run.sh"]

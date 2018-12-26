@@ -1,1 +1,5 @@
-{}
+{
+  "nconf": {
+    "file": "secure.json"
+  }
+}
