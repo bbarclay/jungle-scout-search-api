@@ -1,6 +1,6 @@
 {
   "database": {
-    "mongoUrl": "mongodb://localhost:27017/search-api"
+    "mongoUrl": "mongodb://db:27017/search-api"
   },
   "nconf": {
     "file": "secure.json"

@@ -16,7 +16,7 @@ const createFakeApplication = async () => {
   return application.get('apiKey');
 };
 
-describe.only('v1/search', () => {
+describe('v1/search', () => {
   before(async () => {
     autoroute(global.app, {
       throwErrors: true,
@@ -33,7 +33,7 @@ describe.only('v1/search', () => {
       .expect(401);
   });
 
-  it('should break if url parameters ar not provided', async () => {
+  it('should break if url parameters are not provided', async () => {
     const apiKey = await createFakeApplication();
     await request(global.app)
       .get('/search')

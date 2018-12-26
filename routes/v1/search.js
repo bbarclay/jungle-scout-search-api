@@ -1,15 +1,12 @@
 import { HttpStatusError } from 'common-errors';
 import $ from 'cheerio';
 import rp from 'request-promise';
-import fs from 'fs';
-
 import middlewares from '../../middlewares';
 import Search from '../../models/Search';
 
 const parser = async (asin) => {
   const url = `https://www.amazon.com/dp/${asin}`;
   const html = await rp({ url, gzip: true });
-  await fs.writeFileSync('html-blh.html', html);
   const category = await $('.a-breadcrumb > ul > li:first-child > .a-list-item > a', html).text().trim();
   // const rank = await $('', html);
   const dimensions = await $('td:contains(Product Dimensions)', html).next().text();
