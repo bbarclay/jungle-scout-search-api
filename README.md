@@ -10,7 +10,7 @@ You will need the following things properly installed on your computer.
 
 ## Installation
 
-- `git clone <repository-url>` this repository
+- `git clone https://github.com/aklkv/jungle-scout-search-api.git` this repository
 - `cd jungle-scout-search-app`
 - `npm install`
 - `docker-composer up`
