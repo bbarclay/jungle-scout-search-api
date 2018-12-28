@@ -7,14 +7,18 @@ import Search from '../../models/Search';
 const parser = async (asin) => {
   const url = `https://www.amazon.com/dp/${asin}`;
   const html = await rp({ url, gzip: true });
+
   const category = await $('.a-breadcrumb > ul > li:first-child > .a-list-item > a', html).text().trim();
-  // const rank = await $('', html);
+  const rank = await $('tr#SalesRank > td.value', html).contents().first().text()
+    .trim()
+    .replace(/[^\w\s#]/gi, '');
   const dimensions = await $('td:contains(Product Dimensions)', html).next().text();
 
   return {
     asin,
     category,
     dimensions,
+    rank,
   };
 };
 

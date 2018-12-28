@@ -14,6 +14,10 @@ const Search = new Schema({
     type: String,
     required: true,
   },
+  rank: {
+    type: String,
+    required: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

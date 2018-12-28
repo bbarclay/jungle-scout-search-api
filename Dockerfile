@@ -5,8 +5,8 @@ MAINTAINER Alexey Kulakov <uni_que@me.com>
 RUN pm2 install profiler
 
 # Configure
-COPY run.sh /run.sh
-RUN chmod +x /run.sh
+COPY *.sh /
+RUN chmod +x /run.sh /wait-for-it.sh
 
 WORKDIR /var/www
 
