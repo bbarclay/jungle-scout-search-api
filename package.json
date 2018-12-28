@@ -18,7 +18,7 @@
     "test": "tests"
   },
   "scripts": {
-    "build": "gulp build",
+    "lint:js": "eslint .",
     "start": "pm2-runtime start ecosystem.config.js",
     "start:production": "pm2-runtime start ecosystem.config.js --env production",
     "test": "NODE_ENV=test mocha -r esm tests --recursive --exit"
