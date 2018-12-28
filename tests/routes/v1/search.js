@@ -56,6 +56,7 @@ describe('v1/search', () => {
 
     expect(response.body).to.have.property('category');
     expect(response.body).to.have.property('dimensions');
+    expect(response.body).to.have.property('rank');
 
     const searchRecord = await Search.findOne({ asin });
 
