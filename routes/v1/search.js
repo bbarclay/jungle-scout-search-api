@@ -1,8 +1,9 @@
 import { HttpStatusError } from 'common-errors';
 import $ from 'cheerio';
 import rp from 'request-promise';
+
 import middlewares from '../../middlewares';
-import Search from '../../models/Search';
+import Product from '../../models/Product';
 
 const parser = async (asin) => {
   const url = `https://www.amazon.com/dp/${asin}`;
@@ -12,7 +13,7 @@ const parser = async (asin) => {
   const rank = await $('tr#SalesRank > td.value', html).contents().first().text()
     .trim()
     .replace(/[^\w\s#]/gi, '');
-  const dimensions = await $('td:contains(Product Dimensions)', html).next().text();
+  const dimensions = await $('td:contains(Product Dimensions)', html).next().text().trim();
 
   return {
     asin,
@@ -22,12 +23,12 @@ const parser = async (asin) => {
   };
 };
 
-const getSearchItem = async asin => Search.findOne({ asin });
+const getProduct = async asin => Product.findOne({ asin });
 
-const cacheSearch = record => Search.create(record);
+const cacheProduct = record => Product.create(record);
 
 const isInCache = async (asin) => {
-  const searchRecord = await getSearchItem(asin);
+  const searchRecord = await getProduct(asin);
 
   if (!searchRecord) {
     return false;
@@ -52,9 +53,9 @@ const search = async (req, res) => {
   }
 
   if (!await isInCache(asin)) {
-    result = await cacheSearch(await parser(asin));
+    result = await cacheProduct(await parser(asin));
   } else {
-    result = await getSearchItem(asin);
+    result = await getProduct(asin);
   }
 
   res.json(result);

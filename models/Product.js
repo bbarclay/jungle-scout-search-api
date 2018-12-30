@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 
-const Search = new Schema({
+const Product = new Schema({
   asin: {
     type: String,
     lowercase: true,
@@ -8,15 +8,12 @@ const Search = new Schema({
   },
   category: {
     type: String,
-    required: true,
   },
   dimensions: {
     type: String,
-    required: true,
   },
   rank: {
     type: String,
-    required: true,
   },
   createdAt: {
     type: Date,
@@ -29,7 +26,7 @@ const Search = new Schema({
 });
 
 
-Search.pre('save', (next) => {
+Product.pre('save', (next) => {
   const now = new Date();
   this.updatedAt = now;
   if (!this.createdAt) {
@@ -38,4 +35,4 @@ Search.pre('save', (next) => {
   next();
 });
 
-export default mongoose.model('Search', Search);
+export default mongoose.model('Product', Product);
