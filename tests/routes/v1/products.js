@@ -2,13 +2,12 @@ import { errors } from 'celebrate';
 import { expect } from 'chai';
 import autoroute from 'express-autoroute';
 import request from 'supertest';
-import nock from 'nock';
-import fs from 'fs';
 
 import middlewares from '../../../middlewares';
 import Product from '../../../models/Product';
 import Application from '../../../models/Application';
 import applicationScheme from '../../fixtures/v1/application';
+import productScheme from '../../fixtures/v1/product';
 import generator from '../../helpers/generator';
 
 const createFakeApplication = async () => {
@@ -17,11 +16,11 @@ const createFakeApplication = async () => {
   return application.get('apiKey');
 };
 
-describe('v1/search', () => {
+describe('v1/products', () => {
   before(async () => {
     autoroute(global.app, {
       throwErrors: true,
-      routeFile: rootPath('./routes/v1/search.js'),
+      routeFile: rootPath('./routes/v1/products.js'),
     });
 
     global.app.use(errors());
@@ -30,37 +29,35 @@ describe('v1/search', () => {
 
   it('should break if X-API-TOKEN is not present', async () => {
     await request(global.app)
-      .get('/search')
+      .get('/products')
       .expect(401);
   });
 
-  it('should break if url parameters are not provided', async () => {
+  it('should break if no records exist in the collection', async () => {
     const apiKey = await createFakeApplication();
+
     await request(global.app)
-      .get('/search')
+      .get('/products')
       .set('X-API-KEY', apiKey)
-      .expect(400);
+      .expect(404);
   });
 
-  it('should successfully respond with parsed data', async () => {
+  it('should successfully respond with data', async () => {
     const apiKey = await createFakeApplication();
-    const asin = 'B002QYW8LW';
 
-    nock('https://www.amazon.com')
-      .get(`/dp/${asin}`)
-      .reply(200, await fs.readFileSync('tests/fixtures/v1/search.html'));
+    const products = generator(productScheme, 5, 20);
+
+    await Product.create(products);
 
     const response = await request(global.app)
-      .get(`/search?asin=${asin}`)
+      .get('/products')
       .set('X-API-KEY', apiKey)
       .expect(200);
 
-    expect(response.body).to.have.property('category');
-    expect(response.body).to.have.property('dimensions');
-    expect(response.body).to.have.property('rank');
 
-    const searchRecord = await Product.findOne({ asin });
-
-    expect(searchRecord).to.have.property('asin', asin.toLowerCase());
+    expect(response.body).to.have.length(products.length);
+    expect(response.body[0]).to.have.property('category');
+    expect(response.body[0]).to.have.property('dimensions');
+    expect(response.body[0]).to.have.property('rank');
   });
 });
