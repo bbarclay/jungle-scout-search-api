@@ -5,7 +5,7 @@ import middlewares from '../../middlewares';
 import Product from '../../models/Product';
 
 const getAll = async (req, res) => {
-  const records = await Product.find({});
+  const records = await Product.find({}).sort({ updatedAt: 'desc' });
 
   if (_.isEmpty(records)) {
     throw new HttpStatusError(404, 'No products have been found');
