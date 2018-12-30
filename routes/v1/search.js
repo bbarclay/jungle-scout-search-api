@@ -1,6 +1,7 @@
 import { HttpStatusError } from 'common-errors';
 import $ from 'cheerio';
 import rp from 'request-promise';
+import _ from 'lodash';
 
 import middlewares from '../../middlewares';
 import Product from '../../models/Product';
@@ -30,7 +31,7 @@ const cacheProduct = record => Product.create(record);
 const isInCache = async (asin) => {
   const searchRecord = await getProduct(asin);
 
-  if (!searchRecord) {
+  if (_.isEmpty(searchRecord)) {
     return false;
   }
 
@@ -52,10 +53,10 @@ const search = async (req, res) => {
     throw new HttpStatusError(400, 'ASIN is missing');
   }
 
-  if (!await isInCache(asin)) {
-    result = await cacheProduct(await parser(asin));
-  } else {
+  if (await isInCache(asin)) {
     result = await getProduct(asin);
+  } else {
+    result = await cacheProduct(await parser(asin));
   }
 
   res.json(result);
